@@ -3,3 +3,4 @@ resource "aws_amplify_app" "amplify" {
     repository = var.source-repo
     description = "Creates a new AWS amplify environment to host your webapp."
 }
+
