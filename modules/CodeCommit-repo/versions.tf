@@ -1,11 +1,4 @@
 terraform {
-    cloud {
-        organization ="LCC-personalSite"
-        workspaces {
-            name ="wildrydes-webapp-terraform"
-        }
-
-    }
     required_providers {
         aws= {
             source = "hashicorp/aws"
