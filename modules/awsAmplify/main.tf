@@ -19,32 +19,12 @@ resource "aws_amplify_app" "amplify" {
         target = "/index.html"
     }
     environment_variables = {
-        ENV = "test"
+        USER_BRANCH = "prod"
+        _LIVE_UPDATES = <<-EOT
+         [{"name":"Amplify CLI","pkg":"@aws-amplify/cli","type":"npm","version":"latest"}]
+         EOT
     }
-#     build_spec = <<-EOT
-#     version: 1
-#     backend:
-#         phases:
-#             build:
-#             commands:
-#                 - '# Execute Amplify CLI with the helper script'
-#                 - amplifyPush --simple
-#     frontend:
-#         phases:
-#             preBuild:
-#             commands:
-#                 - npm install
-#             build:
-#             commands:
-#                 - npm run build
-#         artifacts:
-#             baseDirectory: dist
-#             files:
-#             - '**/*'
-#         cache:
-#             paths:
-#             - node_modules/**/*
-# EOT
+
 }
 
 # resource "aws_amplify_backend_environment" "amplify" {
