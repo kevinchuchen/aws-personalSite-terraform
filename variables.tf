@@ -10,3 +10,8 @@ variable "AWS_SECRET_ACCESS_KEY"{
     sensitive=true
 }
 
+variable "GITHUB_ACCESS_TOKEN"{
+    type=string
+    description="Github access token"
+    sensitive=true
+}

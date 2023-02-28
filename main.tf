@@ -15,5 +15,6 @@ provider "aws" {
 
 module "create-amplify-env"{
     source = "./modules/awsAmplify"
-    source-repo = "https://github.com/kevinchuchen/webapp-wildRydes/tree/main"
+    source-repo = "https://github.com/kevinchuchen/webapp-wildRydes"
+    GITHUB_ACCESS_TOKEN = var.GITHUB_ACCESS_TOKEN
 }
