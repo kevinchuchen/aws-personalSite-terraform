@@ -8,19 +8,24 @@
 #     enable_branch_auto_build = true
 #     description = "Creates a new AWS amplify environment to host your webapp."
 
-#     custom_rule {
-#         source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/>"
-#         status = "200"
-#         target = "/index.html"
-#     }
-#     custom_rule {
-#         source = "/<*>"
-#         status = "404"
-#         target = "/index.html"
-#     }
-#     environment_variables = {
-#         ENV = "test"
-#     }
+    custom_rule {
+        source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/>"
+        status = "200"
+        target = "/index.html"
+    }
+    custom_rule {
+        source = "/<*>"
+        status = "404"
+        target = "/index.html"
+    }
+    environment_variables = {
+        USER_BRANCH = "prod"
+        _LIVE_UPDATES = <<-EOT
+         [{"name":"Amplify CLI","pkg":"@aws-amplify/cli","type":"npm","version":"latest"}]
+         EOT
+    }
+
+}
 
 # }
 
