@@ -1,5 +1,5 @@
 #Creates a lambda function for full serverless backend - coupled with the required IAM permissions to access AWS services
-data archieve_file "archieve"
+data archieve_file "archieve"{}
 resource "aws_lambda_function" "order_ride_lambda" {
 
 }

@@ -1,12 +1,12 @@
 #Hosts an AWS Amplify webapp based on specified github repo
 
-# resource "aws_amplify_app" "amplify" {
-#     name = var.amplify-name
-#     repository = var.source-repo
-#     access_token = var.GITHUB_ACCESS_TOKEN
-#     iam_service_role_arn = aws_iam_role.amplify-backend-role.arn
-#     enable_branch_auto_build = true
-#     description = "Creates a new AWS amplify environment to host your webapp."
+resource "aws_amplify_app" "amplify" {
+    name = var.amplify-name
+    repository = var.source-repo
+    access_token = var.GITHUB_ACCESS_TOKEN
+    iam_service_role_arn = aws_iam_role.amplify-backend-role.arn
+    enable_branch_auto_build = true
+    description = "Creates a new AWS amplify environment to host your webapp."
 
     custom_rule {
         source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/>"
