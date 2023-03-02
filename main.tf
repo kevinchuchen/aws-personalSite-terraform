@@ -15,17 +15,17 @@ provider "aws" {
 #     source = "./modules/CodeCommit-repo"
 # }
 
-# module "create-amplify-env"{
-#     source = "./modules/awsAmplify"
-#     source-repo = "https://github.com/kevinchuchen/webapp-wildRydes"
-#     GITHUB_ACCESS_TOKEN = var.GITHUB_ACCESS_TOKEN
+module "create-amplify-env"{
+    source = "./modules/awsAmplify"
+    source-repo = "https://github.com/kevinchuchen/webapp-wildRydes"
+    GITHUB_ACCESS_TOKEN = var.GITHUB_ACCESS_TOKEN
+}
+
+# module "create-DynamoDB-table"{
+#     source = "./modules/DynamoDB"
 # }
 
-module "create-DynamoDB-table"{
-    source = "./modules/DynamoDB"
-}
-
-module "create-lambda-function"{
-    source = "./modules/Lambda"
-    lambda-dynamoDB-ARN = module.create-DynamoDB-table.DynamoDB-ARN
-}
+# module "create-lambda-function"{
+#     source = "./modules/Lambda"
+#     lambda-dynamoDB-ARN = module.create-DynamoDB-table.DynamoDB-ARN
+# }

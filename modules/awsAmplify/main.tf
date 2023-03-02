@@ -6,6 +6,8 @@ resource "aws_amplify_app" "amplify" {
     access_token = var.GITHUB_ACCESS_TOKEN
     iam_service_role_arn = aws_iam_role.amplify-backend-role.arn
     enable_branch_auto_build = true
+
+
     description = "Creates a new AWS amplify environment to host your webapp."
 
     custom_rule {
@@ -27,31 +29,29 @@ resource "aws_amplify_app" "amplify" {
 
 }
 
-# }
+resource "aws_amplify_branch" "main" {
+  app_id      = aws_amplify_app.amplify.id
+  branch_name = "main"
+  enable_auto_build = true
 
-# resource "aws_amplify_branch" "main" {
-#   app_id      = aws_amplify_app.amplify.id
-#   branch_name = "main"
-#   enable_auto_build = true
+  framework = "Vue"
 
-#   framework = "Vue"
+}
 
-# }
-
-# #Policy document specifying what service can assume the role
-# data "aws_iam_policy_document" "amplify_assume_role"{
-#     statement {
-#         effect = "Allow"
-#         actions = ["sts:AssumeRole"]
-#         principals {
-#           type = "Service"
-#           identifiers = [ "amplify.amazonaws.com" ]
-#         }
-#     }
-# }
-# #IAM role providing admin access to aws resources
-# resource "aws_iam_role" "amplify-backend-role"{
-#     name = "amplify-backend-role"
-#     assume_role_policy =  data.aws_iam_policy_document.amplify_assume_role.json
-#     managed_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess-Amplify"]
-# }
+#Policy document specifying what service can assume the role
+data "aws_iam_policy_document" "amplify_assume_role"{
+    statement {
+        effect = "Allow"
+        actions = ["sts:AssumeRole"]
+        principals {
+          type = "Service"
+          identifiers = [ "amplify.amazonaws.com" ]
+        }
+    }
+}
+#IAM role providing admin access to aws resources
+resource "aws_iam_role" "amplify-backend-role"{
+    name = "amplify-backend-role"
+    assume_role_policy =  data.aws_iam_policy_document.amplify_assume_role.json
+    managed_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess-Amplify"]
+}
