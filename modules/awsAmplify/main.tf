@@ -6,6 +6,38 @@ resource "aws_amplify_app" "amplify" {
     access_token = var.GITHUB_ACCESS_TOKEN
     iam_service_role_arn = aws_iam_role.amplify-backend-role.arn
     enable_branch_auto_build = true
+
+    build_spec = <<-EOT
+        version: 1
+        backend:
+            phases:
+                build:
+                    commands:
+                        - '# Execute Amplify CLI with the helper script'
+                        - amplifyPush --simple
+                postBuild:
+                    commands:
+                        - npm install -g @aws-amplify/cli
+                        - echo '[profile default]' > ~/.aws/config
+                        - amplify init
+
+        frontend:
+            phases:
+                preBuild:
+                    commands:
+                        - npm install
+                build:
+                    commands:
+                         - npm run build
+            artifacts:
+                baseDirectory: dist
+                files:
+                - '**/*'
+            cache:
+                paths:
+                    - node_modules/**/*
+    EOT
+
     description = "Creates a new AWS amplify environment to host your webapp."
 
     custom_rule {
