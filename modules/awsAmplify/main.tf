@@ -15,11 +15,9 @@ resource "aws_amplify_app" "amplify" {
                     commands:
                         - '# Execute Amplify CLI with the helper script'
                         - amplifyPush --simple
-                postBuild:
-                    commands:
-                        - npm install -g @aws-amplify/cli
-                        - echo '[profile default]' > ~/.aws/config
-                        - amplify init
+                        - echo "COGNITO_CLIENT = $CognitoclientID" > process.env.secrets
+                        - cat process.env.secrets
+
 
         frontend:
             phases:
@@ -28,7 +26,9 @@ resource "aws_amplify_app" "amplify" {
                         - npm install
                 build:
                     commands:
-                         - npm run build
+                        - npm run build
+
+
             artifacts:
                 baseDirectory: dist
                 files:
