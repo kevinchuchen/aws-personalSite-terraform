@@ -59,6 +59,7 @@ resource "aws_amplify_app" "amplify" {
 
 }
 
+
 resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.amplify.id
   branch_name = "main"
