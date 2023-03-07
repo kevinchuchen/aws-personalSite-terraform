@@ -1,5 +1,3 @@
-#Hosts an AWS Amplify webapp based on specified github repo
-
 #Creates an AWS cognito resource
 
 resource "aws_cognito_user_pool" "cognitoPool" {

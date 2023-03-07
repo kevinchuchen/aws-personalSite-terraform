@@ -24,6 +24,12 @@ module "create-amplify-env"{
     AMPLIFY_NATIVECLIENT_ID = module.create-Cognito-resource.clientId
 
 }
+module create-SSM-parameter{
+      name  = "/amplify/${APPID}/prod/${var.AMPLIFY_USERPOOL_ID}"
+    AMPLIFY_WEBCLIENT_ID = module.create-Cognito-resource.clientId
+    AMPLIFY_USERPOOL_ID = module.create-Cognito-resource.userPoolId
+    AMPLIFY_NATIVECLIENT_ID = module.create-Cognito-resource.clientId
+}
 module "create-Cognito-resource"{
     source = "./modules/awsCognito"
     cognitoPool-name = "wild-rydes-userPool"
