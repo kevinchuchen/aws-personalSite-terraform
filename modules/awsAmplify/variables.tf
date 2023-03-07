@@ -14,3 +14,18 @@ variable "GITHUB_ACCESS_TOKEN"{
     description="Github access token"
     sensitive=true
 }
+
+variable "AMPLIFY_WEBCLIENT_ID" {
+    type=string
+    description="Cognito webclient ID"
+}
+
+variable "AMPLIFY_USERPOOL_ID" {
+    type=string
+    description="Cognito user pool ID"
+}
+
+variable "AMPLIFY_NATIVECLIENT_ID" {
+    type=string
+    description="Cognito native client ID"
+}

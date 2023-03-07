@@ -14,10 +14,12 @@ resource "aws_amplify_app" "amplify" {
                 build:
                     commands:
                         - '# Execute Amplify CLI with the helper script'
+                        - yum install jq -y
+                        - npm i amplify-headless-interface
                         - amplifyPush --simple
-                        - echo "COGNITO_CLIENT = $CognitoclientID" > process.env.secrets
-                        - cat process.env.secrets
-
+                        - echo $secrets > authconfig.importauth.json
+                        - cat authconfig.importauth.json | jq -c '. += {"version":1}' | amplify import auth --headless
+                        - amplifyPush --simple
 
         frontend:
             phases:
@@ -36,6 +38,7 @@ resource "aws_amplify_app" "amplify" {
             cache:
                 paths:
                     - node_modules/**/*
+
     EOT
 
     description = "Creates a new AWS amplify environment to host your webapp."
@@ -51,10 +54,14 @@ resource "aws_amplify_app" "amplify" {
         target = "/index.html"
     }
     environment_variables = {
-        USER_BRANCH = "prod"
+        USER_BRANCH = "prod",
         _LIVE_UPDATES = <<-EOT
          [{"name":"Amplify CLI","pkg":"@aws-amplify/cli","type":"npm","version":"latest"}]
          EOT
+        AMPLIFY_NATIVECLIENT_ID = var.AMPLIFY_NATIVECLIENT_ID	
+        AMPLIFY_USERPOOL_ID = var.AMPLIFY_USERPOOL_ID
+        AMPLIFY_WEBCLIENT_ID = var.AMPLIFY_WEBCLIENT_ID
+        
     }
 
 }

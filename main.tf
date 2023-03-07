@@ -19,8 +19,16 @@ module "create-amplify-env"{
     source = "./modules/awsAmplify"
     source-repo = "https://github.com/kevinchuchen/webapp-wildRydes"
     GITHUB_ACCESS_TOKEN = var.GITHUB_ACCESS_TOKEN
-}
+    AMPLIFY_WEBCLIENT_ID = module.create-Cognito-resource.clientId
+    AMPLIFY_USERPOOL_ID = module.create-Cognito-resource.userPoolId
+    AMPLIFY_NATIVECLIENT_ID = module.create-Cognito-resource.clientId
 
+}
+module "create-Cognito-resource"{
+    source = "./modules/awsCognito"
+    cognitoPool-name = "wild-rydes-userPool"
+    cognitoClient-name = "wildRydesClient"
+}
 # module "create-DynamoDB-table"{
 #     source = "./modules/DynamoDB"
 # }
