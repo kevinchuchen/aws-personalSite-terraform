@@ -1,9 +1,4 @@
-variable "API-GW-name"{
+variable "lambda-invoke-arn"{
     type=string
-    description = "ARN of created cognito user pool"
-}
-
-variable "cognito-UserPool-Arn"{
-    type=string
-    description = "ARN of created cognito user pool"
+    description = "ARN of lambda being invoked"
 }

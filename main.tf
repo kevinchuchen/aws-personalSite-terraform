@@ -29,6 +29,7 @@ module "create-API-Gateway"{
     source = "./modules/API-Gateway"
     API-GW-name = "WildRydes-authorizer"
     cognito-UserPool-Arn = module.create-Cognito-resource.cognito-userPool-arn
+    lambda-invoke-arn = module.create-lambda-function.lambda_invoke_arn
 }
 
 module "create-amplify-env"{
