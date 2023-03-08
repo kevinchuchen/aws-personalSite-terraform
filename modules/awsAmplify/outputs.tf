@@ -3,7 +3,7 @@
 #     description = "The public dommain to access the s3 bucket"
 # }
 
-# output "Amplify-Role-ARN" {
-#     value = aws_iam_role.amplify-backend-role.arn
-#     description = "ARN for amplify-backend-role"
-# }
+output "Amplify-App-ID" {
+    value = aws_amplify_app.amplify.id
+    description = "Amplify App ID"
+}

@@ -15,6 +15,17 @@ provider "aws" {
 #     source = "./modules/CodeCommit-repo"
 # }
 
+module "create-Cognito-resource"{
+    source = "./modules/awsCognito_ssmParameter"
+    cognitoPool-name = "wild-rydes-userPool"
+    cognitoClient-name = "wildRydesClient"
+
+    userPoolId_name  = "/amplify/${module.create-amplify-env.Amplify-App-ID}/prod/userPoolId"
+    clientId_name  = "/amplify/${module.create-amplify-env.Amplify-App-ID}/prod/webClientId"
+    nativeClientId_name  = "/amplify/${module.create-amplify-env.Amplify-App-ID}/prod/nativeClientId"
+}
+
+
 module "create-amplify-env"{
     source = "./modules/awsAmplify"
     source-repo = "https://github.com/kevinchuchen/webapp-wildRydes"
@@ -24,17 +35,8 @@ module "create-amplify-env"{
     AMPLIFY_NATIVECLIENT_ID = module.create-Cognito-resource.clientId
 
 }
-module create-SSM-parameter{
-      name  = "/amplify/${APPID}/prod/${var.AMPLIFY_USERPOOL_ID}"
-    AMPLIFY_WEBCLIENT_ID = module.create-Cognito-resource.clientId
-    AMPLIFY_USERPOOL_ID = module.create-Cognito-resource.userPoolId
-    AMPLIFY_NATIVECLIENT_ID = module.create-Cognito-resource.clientId
-}
-module "create-Cognito-resource"{
-    source = "./modules/awsCognito"
-    cognitoPool-name = "wild-rydes-userPool"
-    cognitoClient-name = "wildRydesClient"
-}
+
+
 # module "create-DynamoDB-table"{
 #     source = "./modules/DynamoDB"
 # }
