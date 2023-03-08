@@ -25,6 +25,11 @@ module "create-Cognito-resource"{
     nativeClientId_name  = "/amplify/${module.create-amplify-env.Amplify-App-ID}/prod/nativeClientId"
 }
 
+module "create-API-Gateway"{
+    source = "./modules/API-Gateway"
+    API-GW-name = "WildRydes-authorizer"
+    cognito-UserPool-Arn = module.create-Cognito-resource.cognito-userPool-arn
+}
 
 module "create-amplify-env"{
     source = "./modules/awsAmplify"
