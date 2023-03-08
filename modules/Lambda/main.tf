@@ -1,34 +1,43 @@
 #Creates a lambda function for full serverless backend - coupled with the required IAM permissions to access AWS services
-# data archieve_file "archieve"{
-  
-# }
-# resource "aws_lambda_function" "order_ride_lambda" {
-
-# }
-
-
-
-resource "aws_lambda_function" "test_lambda" {
-  # If the file is not in the current working directory you will need to include a
-  # path.module in the filename.
-  filename      = "lambda_function_payload.zip"
-  function_name = "lambda_function_name"
-  role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "index.test"
-
-  # The filebase64sha256() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
-  # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
-  source_code_hash = filebase64sha256("lambda_function_payload.zip")
-
-  runtime = "nodejs16.x"
-
-  environment {
-    variables = {
-      foo = "bar"
-    }
-  }
+data "archive_file" "lambda" {
+  type = "zip"
+  source_file = "${path.module}/NodeJS/index.js"#var.lambda-source
+  output_path = "${path.module}/NodeJS/lambda.zip"#var.lambda-output
 }
+resource "aws_lambda_function" "order_ride_lambda" {
+  filename = "${path.module}/NodeJS/lambda.zip"
+  function_name = "WildRydesLambda"
+  role = aws_iam_role.lambda-role.arn
+  handler = "index.js"
+  source_code_hash = data.archive_file.lambda.output_base64sha256
+  # source_code_hash = filebase64sha256("data.archive_file.lambda.output_path")
+  runtime = "nodejs12.x"
+
+}
+
+
+
+# resource "aws_lambda_function" "test_lambda" {
+#   # If the file is not in the current working directory you will need to include a
+#   # path.module in the filename.
+#   filename      = "lambda_function_payload.zip"
+#   function_name = "lambda_function_name"
+#   role          = aws_iam_role.iam_for_lambda.arn
+#   handler       = "index.test"
+
+#   # The filebase64sha256() function is available in Terraform 0.11.12 and later
+#   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
+#   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
+#   source_code_hash = filebase64sha256("lambda_function_payload.zip")
+
+#   runtime = "nodejs16.x"
+
+#   environment {
+#     variables = {
+#       foo = "bar"
+#     }
+#   }
+# }
 
 
 
@@ -43,7 +52,7 @@ data "aws_iam_policy_document" "lambda_assume_role"{
         }
     }
 }
-#Creates DynaboDB writeOnly policy
+#Creates DynamoDB writeOnly policy
 resource "aws_iam_policy" "wildrydes-DDB-writeOnly" {
   name = "WildRydes-DynamoDB-WriteOnly"
   description = "Allows WildRydes lambda function write access to DynamoDB"

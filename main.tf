@@ -6,7 +6,7 @@ provider "aws" {
 #TODO
 #DONE -- create IAM role for Amplify backend
 #DONE -- create amplify environment and deploy app
-#DONE -- app install for to give aws Github permissions
+#DONE -- create Cognito environment and link to web app
 #DONE -- Create DDB
 #DONE -- Create IAM role for Lambda function
 #Create Lambda function
@@ -37,11 +37,13 @@ module "create-amplify-env"{
 }
 
 
-# module "create-DynamoDB-table"{
-#     source = "./modules/DynamoDB"
-# }
+module "create-DynamoDB-table"{
+    source = "./modules/DynamoDB"
+}
 
-# module "create-lambda-function"{
-#     source = "./modules/Lambda"
-#     lambda-dynamoDB-ARN = module.create-DynamoDB-table.DynamoDB-ARN
-# }
+module "create-lambda-function"{
+    source = "./modules/Lambda"
+    # lambda-source = "${path.module}/modules/Lambda/NodeJS/index.js"
+    # lambda-output = "${path.module}/modules/Lambda/NodeJS/lambda.zip"
+    lambda-dynamoDB-ARN = module.create-DynamoDB-table.DynamoDB-ARN
+}
