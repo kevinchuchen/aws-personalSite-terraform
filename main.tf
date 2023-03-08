@@ -9,11 +9,10 @@ provider "aws" {
 #DONE -- create Cognito environment and link to web app
 #DONE -- Create DDB
 #DONE -- Create IAM role for Lambda function
-#Create Lambda function
-
-# module "create-codecommit-repo"{
-#     source = "./modules/CodeCommit-repo"
-# }
+#DONE -- Create Lambda function
+#DONE -- API Gateway creation
+#Integrate API GW with lambda
+#Documentations
 
 module "create-Cognito-resource"{
     source = "./modules/awsCognito_ssmParameter"
