@@ -25,7 +25,7 @@ resource "aws_api_gateway_method" "api-GW-POST" {
   authorizer_id = aws_api_gateway_authorizer.api-GW-authorizer.id
 }
 
-resource "aws_api_gateway_integration" "api-GW-Lambda-Integration" {
+resource "aws_api_gateway_integration" "apiGW-Lambda-Integration" {
   rest_api_id   = aws_api_gateway_rest_api.api-gateway.id
   resource_id   = aws_api_gateway_resource.api-GW-resource.id
   http_method   = aws_api_gateway_method.api-GW-POST.http_method
@@ -33,16 +33,6 @@ resource "aws_api_gateway_integration" "api-GW-Lambda-Integration" {
   type          = "AWS_PROXY"
   uri           = var.lambda-invoke-arn
 }
-
-resource "aws_api_gateway_integration" "integration" {
-  rest_api_id             = aws_api_gateway_rest_api.api.id
-  resource_id             = aws_api_gateway_resource.resource.id
-  http_method             = aws_api_gateway_method.method.http_method
-  integration_http_method = "POST"
-  type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.lambda.invoke_arn
-}
-
 
 # resource "aws_api_gateway_method" "example" {
 #   authorization = "NONE"
