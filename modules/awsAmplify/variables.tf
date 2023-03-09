@@ -29,3 +29,8 @@ variable "AMPLIFY_NATIVECLIENT_ID" {
     type=string
     description="Cognito native client ID"
 }
+
+variable "API-GW-InvokeUrl"{
+    type=string
+    description = "Entrypoint URL of API Gateway invocation"
+}

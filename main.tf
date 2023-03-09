@@ -22,13 +22,21 @@ module "create-Cognito-resource"{
     userPoolId_name  = "/amplify/${module.create-amplify-env.Amplify-App-ID}/prod/userPoolId"
     clientId_name  = "/amplify/${module.create-amplify-env.Amplify-App-ID}/prod/webClientId"
     nativeClientId_name  = "/amplify/${module.create-amplify-env.Amplify-App-ID}/prod/nativeClientId"
+
 }
 
 module "create-API-Gateway"{
     source = "./modules/API-Gateway"
-    API-GW-name = "WildRydes-authorizer"
+    API-GW-name = "WildRydes"
+    stage-name = "prod"
     cognito-UserPool-Arn = module.create-Cognito-resource.cognito-userPool-arn
     lambda-invoke-arn = module.create-lambda-function.lambda_invoke_arn
+}
+module "api-gateway-enable-cors" {
+  source  = "squidfunk/api-gateway-enable-cors/aws"
+  version = "0.3.3"
+  api_id          = module.create-API-Gateway.API-GW-ID
+  api_resource_id = module.create-API-Gateway.API-GW-Resource-ID
 }
 
 module "create-amplify-env"{
@@ -38,7 +46,7 @@ module "create-amplify-env"{
     AMPLIFY_WEBCLIENT_ID = module.create-Cognito-resource.clientId
     AMPLIFY_USERPOOL_ID = module.create-Cognito-resource.userPoolId
     AMPLIFY_NATIVECLIENT_ID = module.create-Cognito-resource.clientId
-
+    API-GW-InvokeUrl = module.create-API-Gateway.API-GW-InvokeUrl
 }
 
 

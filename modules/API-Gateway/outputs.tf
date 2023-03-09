@@ -1,9 +1,14 @@
-# output "s3-staticDomain" {
-#     value = aws_s3_bucket_website_configuration.s3-bucket.website_endpoint
-#     description = "The public dommain to access the s3 bucket"
-# }
+output "API-GW-InvokeUrl"{
+    value = aws_api_gateway_deployment.api-GW-deployment.invoke_url
+    description = "API gateway invoke URL"
+}
 
-# output "Amplify-App-ID" {
-#     value = aws_amplify_app.amplify.id
-#     description = "Amplify App ID"
-# }
+output "API-GW-ID"{
+    value = aws_api_gateway_rest_api.api-gateway.id
+    description = "API gateway ID"
+}
+
+output "API-GW-Resource-ID"{
+    value = aws_api_gateway_resource.api-GW-resource.id
+    description = "API gateway resource ID"
+}
