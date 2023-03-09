@@ -36,7 +36,7 @@ resource "aws_api_gateway_method_response" "response_200" {
   resource_id = aws_api_gateway_resource.api-GW-resource.id
   http_method = aws_api_gateway_method.api-GW-POST.http_method
   #response_models = {"application/json" = "Empty"}
-  status_code = "200"
+  status_code = 200
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = true,
     "method.response.header.Access-Control-Allow-Methods" = true,
@@ -56,16 +56,16 @@ resource "aws_api_gateway_integration" "apiGW-Lambda-Integration" {
   uri           = var.lambda-invoke-arn
 }
 resource "aws_api_gateway_integration_response" "apiGW-integration-response" {
-   rest_api_id = "${aws_api_gateway_rest_api.api-gateway.id}"
-   resource_id = "${aws_api_gateway_resource.api-GW-resource.id}"
-   http_method = "${aws_api_gateway_method.api-GW-POST.http_method}"
-   status_code = "200"//${aws_api_gateway_method_response.response_200.status_code}"
+   rest_api_id = aws_api_gateway_rest_api.api-gateway.id
+   resource_id = aws_api_gateway_resource.api-GW-resource.id
+   http_method = aws_api_gateway_method.api-GW-POST.http_method
+   status_code = aws_api_gateway_method_response.response_200.status_code
    depends_on = [
         aws_api_gateway_integration.apiGW-Lambda-Integration
     ]
-   response_templates = {
-       "application/json" = "Empty"
-   }
+#    response_templates = {
+#        "application/json" = "Empty"
+#    }
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
     "method.response.header.Access-Control-Allow-Methods" = "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
