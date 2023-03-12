@@ -1,3 +1,8 @@
+variable "lambda-function-arn"{
+    type=string
+    description = "ARN of lambda being invoked"
+}
+
 variable "lambda-invoke-arn"{
     type=string
     description = "ARN of lambda being invoked"

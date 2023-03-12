@@ -30,7 +30,7 @@ variable "AMPLIFY_NATIVECLIENT_ID" {
     description="Cognito native client ID"
 }
 
-variable "API-GW-InvokeUrl"{
-    type=string
-    description = "Entrypoint URL of API Gateway invocation"
-}
+# variable "API-GW-InvokeUrl"{
+#     type=string
+#     description = "Entrypoint URL of API Gateway invocation"
+# }

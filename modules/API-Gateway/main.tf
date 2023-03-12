@@ -1,3 +1,13 @@
+
+resource "aws_lambda_permission" "apigw" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = "${var.lambda-function-arn}"
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.api-gateway.execution_arn}/*/*/*"
+}
+
+
 #API Gateway acts as an entry point for the webapp to trigger lambda function
 
 resource "aws_api_gateway_rest_api" "api-gateway" {
@@ -35,12 +45,12 @@ resource "aws_api_gateway_method_response" "response_200" {
   rest_api_id = aws_api_gateway_rest_api.api-gateway.id
   resource_id = aws_api_gateway_resource.api-GW-resource.id
   http_method = aws_api_gateway_method.api-GW-POST.http_method
-  #response_models = {"application/json" = "Empty"}
+  response_models = {"application/json" = "Empty"}
   status_code = 200
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = true,
     "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Origin" = true,
   }
   depends_on = [aws_api_gateway_method.api-GW-POST]
 
@@ -55,31 +65,13 @@ resource "aws_api_gateway_integration" "apiGW-Lambda-Integration" {
   type          = "AWS_PROXY"
   uri           = var.lambda-invoke-arn
 }
-resource "aws_api_gateway_integration_response" "apiGW-integration-response" {
-   rest_api_id = aws_api_gateway_rest_api.api-gateway.id
-   resource_id = aws_api_gateway_resource.api-GW-resource.id
-   http_method = aws_api_gateway_method.api-GW-POST.http_method
-   status_code = aws_api_gateway_method_response.response_200.status_code
-   depends_on = [
-        aws_api_gateway_integration.apiGW-Lambda-Integration
-    ]
-#    response_templates = {
-#        "application/json" = "Empty"
-#    }
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-    "method.response.header.Access-Control-Allow-Methods" = "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-  }
-
-}
 
 resource "aws_api_gateway_deployment" "api-GW-deployment" {
   rest_api_id = aws_api_gateway_rest_api.api-gateway.id
 
   depends_on = [
     aws_api_gateway_method_response.response_200,
-    aws_api_gateway_integration_response.apiGW-integration-response
+    # aws_api_gateway_integration_response.apiGW-integration-response
   ]
   triggers = {
     # NOTE: The configuration below will satisfy ordering considerations,

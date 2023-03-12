@@ -61,7 +61,7 @@ resource "aws_amplify_app" "amplify" {
         AMPLIFY_NATIVECLIENT_ID = var.AMPLIFY_NATIVECLIENT_ID	
         AMPLIFY_USERPOOL_ID = var.AMPLIFY_USERPOOL_ID
         AMPLIFY_WEBCLIENT_ID = var.AMPLIFY_WEBCLIENT_ID
-        API_GATEWAY_INVOKEURL = var.API-GW-InvokeUrl
+        # API_GATEWAY_INVOKEURL = var.API-GW-InvokeUrl
     }
 
 }

@@ -30,7 +30,9 @@ module "create-API-Gateway"{
     API-GW-name = "WildRydes"
     stage-name = "prod"
     cognito-UserPool-Arn = module.create-Cognito-resource.cognito-userPool-arn
+    lambda-function-arn = module.create-lambda-function.lambda_function_arn
     lambda-invoke-arn = module.create-lambda-function.lambda_invoke_arn
+
 }
 module "api-gateway-enable-cors" {
   source  = "squidfunk/api-gateway-enable-cors/aws"
@@ -46,7 +48,7 @@ module "create-amplify-env"{
     AMPLIFY_WEBCLIENT_ID = module.create-Cognito-resource.clientId
     AMPLIFY_USERPOOL_ID = module.create-Cognito-resource.userPoolId
     AMPLIFY_NATIVECLIENT_ID = module.create-Cognito-resource.clientId
-    API-GW-InvokeUrl = module.create-API-Gateway.API-GW-InvokeUrl
+    #API-GW-InvokeUrl = module.create-API-Gateway.API-GW-InvokeUrl
 }
 
 
@@ -56,7 +58,7 @@ module "create-DynamoDB-table"{
 
 module "create-lambda-function"{
     source = "./modules/Lambda"
-    # lambda-source = "${path.module}/modules/Lambda/NodeJS/index.js"
-    # lambda-output = "${path.module}/modules/Lambda/NodeJS/lambda.zip"
+    lambda-source = "${path.module}/modules/Lambda/NodeJS/index.js"
+    lambda-output = "${path.module}/modules/Lambda/NodeJS/lambda.zip"
     lambda-dynamoDB-ARN = module.create-DynamoDB-table.DynamoDB-ARN
 }
