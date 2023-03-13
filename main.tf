@@ -1,8 +1,3 @@
-provider "aws" {
-    region = "us-east-1"
-    access_key = var.AWS_ACCESS_KEY_ID
-    secret_key = var.AWS_SECRET_ACCESS_KEY
-}
 #TODO
 #DONE -- create IAM role for Amplify backend
 #DONE -- create amplify environment and deploy app
@@ -11,8 +6,15 @@ provider "aws" {
 #DONE -- Create IAM role for Lambda function
 #DONE -- Create Lambda function
 #DONE -- API Gateway creation
-#Integrate API GW with lambda
-#Documentations
+#DONE -- Integrate API GW with lambda
+#DONE -- Documentations
+
+
+provider "aws" {
+    region = "us-east-1"
+    access_key = var.AWS_ACCESS_KEY_ID
+    secret_key = var.AWS_SECRET_ACCESS_KEY
+}
 
 module "create-Cognito-resource"{
     source = "./modules/awsCognito_ssmParameter"
