@@ -3,7 +3,6 @@
 #     value= module.create-s3-staticSite.s3-staticDomain
 # }
 
-output "invokeURL"{
-    value = module.create-lambda-function.lambda_invoke_arn
-
+output "APIGW-invokeURL"{
+    value = module.create-API-Gateway.API-GW-InvokeUrl
 }

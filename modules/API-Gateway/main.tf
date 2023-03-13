@@ -68,7 +68,7 @@ resource "aws_api_gateway_integration" "apiGW-Lambda-Integration" {
 
 resource "aws_api_gateway_deployment" "api-GW-deployment" {
   rest_api_id = aws_api_gateway_rest_api.api-gateway.id
-
+  stage_name = var.stage-name
   depends_on = [
     aws_api_gateway_method_response.response_200,
     # aws_api_gateway_integration_response.apiGW-integration-response

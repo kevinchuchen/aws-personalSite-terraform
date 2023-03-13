@@ -48,7 +48,7 @@ module "create-amplify-env"{
     AMPLIFY_WEBCLIENT_ID = module.create-Cognito-resource.clientId
     AMPLIFY_USERPOOL_ID = module.create-Cognito-resource.userPoolId
     AMPLIFY_NATIVECLIENT_ID = module.create-Cognito-resource.clientId
-    #API-GW-InvokeUrl = module.create-API-Gateway.API-GW-InvokeUrl
+    API-GW-InvokeUrl = module.create-API-Gateway.API-GW-InvokeUrl
 }
 
 

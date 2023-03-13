@@ -19,6 +19,8 @@ resource "aws_amplify_app" "amplify" {
                         - amplifyPush --simple
                         - echo $secrets > authconfig.importauth.json
                         - cat authconfig.importauth.json | jq -c '. += {"version":1}' | amplify import auth --headless
+                        - echo "VUE_APP_APIGW_INVOKEURL=$API_GATEWAY_INVOKEURL" >> .env
+                        - cat .env
                         - amplifyPush --simple
 
         frontend:
@@ -61,7 +63,7 @@ resource "aws_amplify_app" "amplify" {
         AMPLIFY_NATIVECLIENT_ID = var.AMPLIFY_NATIVECLIENT_ID	
         AMPLIFY_USERPOOL_ID = var.AMPLIFY_USERPOOL_ID
         AMPLIFY_WEBCLIENT_ID = var.AMPLIFY_WEBCLIENT_ID
-        # API_GATEWAY_INVOKEURL = var.API-GW-InvokeUrl
+        API_GATEWAY_INVOKEURL = var.API-GW-InvokeUrl
     }
 
 }
