@@ -1,4 +1,4 @@
-# WildRyde infrastructure practice with Terraform
+# WildRyde infrastructure with Terraform
 Terraform configuration of WildRydes - A serverless on-demand ride booking application.
 
 # Technologies
